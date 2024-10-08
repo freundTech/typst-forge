@@ -35,13 +35,13 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: unix-packages
-        path: output/**/*-unix.conda
+        path: output/**/*_unix.conda
 
     - name: Upload Windows Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: win-packages
-        path: output/**/*-win.conda
+        path: output/**/*_win.conda
 
   test:
     needs: [build]
@@ -50,6 +50,7 @@ jobs:
         include:
           - { target: "win", os: "windows-latest" }
           - { target: "unix", os: "ubuntu-latest" }
+      fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
