@@ -65,6 +65,7 @@ jobs:
         with:
           name: ${{ matrix.target }}-packages
       - name: Run tests
+        shell: bash
         run: |
           for file in output/**/*.conda; do
             if ! rattler-build text -c conda-forge/label/typst_rc -c conda-forge -c typst-forge --package-file "$file"; then
