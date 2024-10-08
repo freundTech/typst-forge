@@ -69,7 +69,7 @@ jobs:
         shell: bash
         run: |
           for file in packages/**/*.conda; do
-            if ! rattler-build test -c conda-forge/label/typst_rc -c conda-forge -c typst-forge --package-file "$file"; then
+            if ! rattler-build test -c conda-forge/label/typst_rc -c conda-forge -c https://prefix.dev/typst-forge --package-file "$file"; then
               rm "$file"
             fi
           done
