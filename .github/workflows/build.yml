@@ -67,7 +67,7 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          for file in output/**/*.conda; do
+          for file in **/*.conda; do
             if ! rattler-build test -c conda-forge/label/typst_rc -c conda-forge -c typst-forge --package-file "$file"; then
               rm "$file"
             fi
@@ -80,6 +80,6 @@ jobs:
           PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
         run: |
           # ignore errors because we want to ignore duplicate packages
-          for file in output/**/*.conda; do
+          for file in **/*.conda; do
             rattler-build upload prefix -c typst-forge "$file" || true
           done
