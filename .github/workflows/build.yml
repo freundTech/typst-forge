@@ -27,7 +27,7 @@ jobs:
         TARGET_PLATFORM: ${{ matrix.target }}
 
       run: |
-        rattler-build build --recipe-dir . --variant-config global-variants.yaml
+        rattler-build build --recipe-dir . --variant-config global-variants.yaml \
           --skip-existing=all --no-test \
           -c conda-forge/label/typst_rc -c conda-forge -c https://prefix.dev/typst-forge
 
