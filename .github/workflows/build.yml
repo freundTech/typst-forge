@@ -11,9 +11,6 @@ on:
 
 jobs:
   build:
-    outputs:
-      packages: ${{ steps.list-packages.outputs.packages }}
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -47,6 +44,7 @@ jobs:
         path: output/**/*-win.conda
 
   test:
+    needs: [build]
     strategy:
       matrix:
         include:
