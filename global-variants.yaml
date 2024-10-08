@@ -1,0 +1,3 @@
+noarch_platform:
+  - unix
+  - win

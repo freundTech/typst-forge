@@ -2,3 +2,6 @@
 # pixi environments
 .pixi
 *.egg-info
+
+# rattler-build
+output/
