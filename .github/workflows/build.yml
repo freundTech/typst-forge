@@ -11,17 +11,10 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        include:
-          - { target: linux-64,  os: ubuntu-latest }
-          - { target: win-64,    os: windows-latest }
-      fail-fast: false
-
     outputs:
       packages: ${{ steps.list-packages.outputs.packages }}
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
       with:
