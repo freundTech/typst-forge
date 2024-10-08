@@ -23,9 +23,6 @@ jobs:
 
     - name: Run code in changed subdirectories
       shell: bash
-      env:
-        TARGET_PLATFORM: ${{ matrix.target }}
-
       run: |
         rattler-build build --recipe-dir . --variant-config global-variants.yaml \
           --skip-existing=all --no-test \

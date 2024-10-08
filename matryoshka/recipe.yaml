@@ -46,11 +46,7 @@ requirements:
     - __unix
   run:
     - typst >=0.12.0rc1
-    - if: noarch_platform == "unix"
-      then:
-        - __unix
-      else:
-        - __win
+    - __${{ noarch_platform }}
 
 about:
   repository: https://github.com/freundTech/typst-matryoshka
