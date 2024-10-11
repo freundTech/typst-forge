@@ -16,6 +16,7 @@ jobs:
         include:
           - { platform: unix, os: ubuntu-latest }
           - { platform: win, os: windows-latest }
+      fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
