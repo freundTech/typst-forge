@@ -8,14 +8,6 @@ repos:
       - id: trailing-whitespace
       - id: check-merge-conflict
       - id: mixed-line-ending
-  - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.3
-    hooks:
-      - id: check-jsonschema
-        name: "Check rattler recipes"
-        files: ^[^/]+/recipe.yaml$
-        types: [yaml]
-        args: ["--schemafile", "https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json"]
   - repo: local
     hooks:
       # ensure pixi environments are up to date
@@ -33,3 +25,9 @@ repos:
         entry: pixi run -e lint actionlint
         types: [yaml]
         files: ^\.github/workflows/
+      - id: check-jsonschema
+        name: Check rattler recipes
+        language: system
+        entry: pixi run -e lint check-jsonschema --schemafile https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+        files: ^[^/]+/recipe.yaml$
+        types: [yaml]

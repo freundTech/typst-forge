@@ -11,7 +11,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        includes:
+          - { platform: unix, os: ubuntu-latest }
+          - { platform: win, os: windows-latest }
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
       with:
@@ -21,63 +26,22 @@ jobs:
         pixi-version: v0.31.0
         activate-environment: true
 
-    - name: Run code in changed subdirectories
+    - name: Build packages
       shell: bash
       run: |
-        rattler-build build --recipe-dir . --variant-config global-variants.yaml \
-          --skip-existing=all --no-test \
+        rattler-build build --recipe-dir . --skip-existing=all \
           -c conda-forge/label/typst_rc -c conda-forge -c https://prefix.dev/typst-forge
-
-    - name: Upload Unix Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: unix-packages
-        path: output/**/*_unix.conda
-
-    - name: Upload Windows Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: win-packages
-        path: output/**/*_win.conda
-
-  test:
-    needs: [build]
-    strategy:
-      matrix:
-        include:
-          - { target: "win", os: "windows-latest" }
-          - { target: "unix", os: "ubuntu-latest" }
-      fail-fast: false
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      - uses: prefix-dev/setup-pixi@v0.8.1
-        with:
-          pixi-version: v0.31.0
-          activate-environment: true
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.target }}-packages
-          path: packages
-      - name: Run tests
-        shell: bash
-        run: |
-          for file in packages/**/*.conda; do
-            if ! rattler-build test -c conda-forge/label/typst_rc -c conda-forge -c https://prefix.dev/typst-forge --package-file "$file"; then
-              rm "$file"
-            fi
-          done
-      - name: Upload all packages
-        shell: bash
-        # do not upload on PR
-        if: github.event_name == 'push'
-        env:
-          PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
-        run: |
-          # ignore errors because we want to ignore duplicate packages
-          for file in packages/**/*.conda; do
-            rattler-build upload prefix -c typst-forge "$file" || true
-          done
+    - name: Upload all packages
+      shell: bash
+      if: github.event_name == 'push'  # do not upload on PR
+      env:
+        PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
+      run: |
+        EXIT_CODE=0
+        for file in packages/**/*.conda; do
+          rattler-build upload prefix -c typst-forge "$file"
+          if [ $? -ne 0 ]; then
+            EXIT_CODE=1
+          fi
+        done
+        exit $EXIT_CODE

@@ -14,22 +14,21 @@ source:
 build:
   number: ${{ build_number }}
   noarch: generic
-  string: ${{ hash }}_${{ build_number }}_${{ noarch_platform }}
-  variant:
-    use_keys:
-      - noarch_platform
+  string: ${{ hash }}_${{ build_number }}_${{ 'win' if win else 'unix' }}
   script:
     content:
       - cargo build --locked --release --target wasm32-unknown-unknown
-      - if: noarch_platform == "unix"
+      - if: not win
         then:
           - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
           - cp typst.toml README.md lib.typ target/wasm32-unknown-unknown/release/matryoshka.wasm
               "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
         else:
-          - mkdir -p "$PREFIX/Library/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
-          - cp typst.toml README.md lib.typ target/wasm32-unknown-unknown/release/matryoshka.wasm
-            "$PREFIX/Library/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+          - mkdir  "$PREFIX/Library/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+          - copy typst.toml "$PREFIX/Library/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+          - copy README.md "$PREFIX/Library/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+          - copy lib.typ "$PREFIX/Library/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+          - copy target/wasm32-unknown-unknown/release/matryoshka.wasm "$PREFIX/Library/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
 
 tests:
   - script:
@@ -43,10 +42,10 @@ requirements:
   build:
     - rust
     - rust-std-wasm32-unknown-unknown
-    - __unix
+    - __${{ 'win' if win else 'unix' }}
   run:
     - typst >=0.12.0rc1
-    - __${{ noarch_platform }}
+    - __${{ 'win' if win else 'unix' }}
 
 about:
   repository: https://github.com/freundTech/typst-matryoshka
