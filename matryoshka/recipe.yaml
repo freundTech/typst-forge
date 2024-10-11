@@ -30,6 +30,7 @@ build:
           - copy lib.typ "$PREFIX\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
           - copy target\wasm32-unknown-unknown\release\matryoshka.wasm "$PREFIX\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
 
+
 tests:
   - script:
       - typst compile test.typ
