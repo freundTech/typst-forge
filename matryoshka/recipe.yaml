@@ -33,6 +33,8 @@ build:
 
 tests:
   - script:
+      - echo %TYPST_PACKAGE_PATH%
+      - dir %TYPST_PACKAGE_PATH%
       - typst compile test.typ
     files:
       recipe:
