@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        includes:
+        include:
           - { platform: unix, os: ubuntu-latest }
           - { platform: win, os: windows-latest }
     runs-on: ${{ matrix.os }}
