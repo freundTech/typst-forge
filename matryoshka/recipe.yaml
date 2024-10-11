@@ -24,11 +24,11 @@ build:
           - cp typst.toml README.md lib.typ target/wasm32-unknown-unknown/release/matryoshka.wasm
               "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
         else:
-          - mkdir "$PREFIX\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy typst.toml "$PREFIX\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy README.md "$PREFIX\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy lib.typ "$PREFIX\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy target\wasm32-unknown-unknown\release\matryoshka.wasm "$PREFIX\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - mkdir "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy typst.toml "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy README.md "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy lib.typ "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy target\wasm32-unknown-unknown\release\matryoshka.wasm "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
 
 
 tests:
