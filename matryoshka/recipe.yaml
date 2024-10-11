@@ -15,21 +15,6 @@ build:
   number: ${{ build_number }}
   noarch: generic
   string: ${{ hash }}_${{ build_number }}_${{ 'win' if win else 'unix' }}
-  script:
-    content:
-      - cargo build --locked --release --target wasm32-unknown-unknown
-      - if: not win
-        then:
-          - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
-          - cp typst.toml README.md lib.typ target/wasm32-unknown-unknown/release/matryoshka.wasm
-              "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
-        else:
-          - mkdir "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy typst.toml "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy README.md "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy lib.typ "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy target\wasm32-unknown-unknown\release\matryoshka.wasm "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-
 
 tests:
   - script:
