@@ -39,6 +39,7 @@ jobs:
       env:
         PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
       run: |
+        shopt -s nullglob
         EXIT_CODE=0
         for file in packages/**/*.conda; do
           if ! rattler-build upload prefix -c typst-forge "$file"; then
