@@ -41,7 +41,7 @@ jobs:
       run: |
         shopt -s nullglob
         EXIT_CODE=0
-        for file in packages/**/*.conda; do
+        for file in output/**/*.conda; do
           if ! rattler-build upload prefix -c typst-forge "$file"; then
             EXIT_CODE=1
           fi
