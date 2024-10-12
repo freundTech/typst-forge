@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+  - repo: local
+    hooks:
+      # ensure pixi environments are up to date
+      # workaround for https://github.com/prefix-dev/pixi/issues/1482
+      - id: pixi-install
+        name: Make sure pixi envs are up to date
+        entry: pixi install -e lint
+        language: system
+        always_run: true
+        require_serial: true
+        pass_filenames: false
+      - id: actionlint
+        name: Lint GitHub Actions workflow files
+        language: system
+        entry: pixi run -e lint actionlint
+        types: [yaml]
+        files: ^\.github/workflows/
+      - id: check-jsonschema
+        name: Check rattler recipes
+        language: system
+        entry: pixi run -e lint check-jsonschema --schemafile https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+        files: ^[^/]+/recipe.yaml$
+        types: [yaml]
