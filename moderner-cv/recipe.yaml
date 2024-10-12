@@ -1,7 +1,6 @@
 context:
   name: "moderner-cv"
   version: "0.1.0"
-  build_number: 0
 
 package:
   name: "typst-${{ name }}"
@@ -14,22 +13,13 @@ source:
     - 0001-Change-template-file-import-to-typst-forge.patch
 
 build:
-  number: ${{ build_number }}
+  number: 1
   noarch: generic
-  string: ${{ hash }}_${{ build_number }}_${{ 'win' if win else 'unix' }}
   script:
     content:
-      - if: not win
-        then:
-          - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
-          - cp -r typst.toml README.md lib.typ template/
-              "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
-        else:
-          - mkdir "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy typst.toml "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy README.md "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy lib.typ "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - xcopy /E template\ "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}\template\"
+      - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+      - cp -r typst.toml README.md lib.typ template/
+          "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
 
 tests:
   - script:
@@ -39,10 +29,9 @@ tests:
 
 requirements:
   build:
-    - __${{ 'win' if win else 'unix' }}
+    - __unix
   run:
     - typst >=0.12.0rc1
-    - __${{ 'win' if win else 'unix' }}
 
 about:
   repository: https://github.com/pavelzw/moderner-cv

@@ -11,13 +11,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        include:
-          - { platform: unix, os: ubuntu-latest }
-          - { platform: win, os: windows-latest }
-      fail-fast: false
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
       with:
