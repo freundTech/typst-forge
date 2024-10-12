@@ -1,6 +1,7 @@
 context:
   name: "matryoshka"
   version: "0.1.0"
+  build_number: 0
 
 package:
   name: "typst-${{ name }}"
@@ -11,23 +12,23 @@ source:
   sha256: 2f7a55c965846df53cd2f3ebcf381214056d28958ef78e49fe34ded79c30afb5
 
 build:
-  number: 0
+  number: ${{ build_number }}
   noarch: generic
+  string: ${{ hash }}_${{ build_number }}_${{ 'win' if win else 'unix' }}
   script:
     content:
       - cargo build --locked --release --target wasm32-unknown-unknown
-      - if: unix
+      - if: not win
         then:
           - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
           - cp typst.toml README.md lib.typ target/wasm32-unknown-unknown/release/matryoshka.wasm
               "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
-      - if: win
-        then:
-          - mkdir "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy typst.toml "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy README.md "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy lib.typ "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
-          - copy target\wasm32-unknown-unknown\release\matryoshka.wasm "%LIBRARY_PREFIX%\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+        else:
+          - mkdir "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy typst.toml "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy README.md "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy lib.typ "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
+          - copy target\wasm32-unknown-unknown\release\matryoshka.wasm "%PREFIX%\Library\share\typst\packages\typst-forge\${{ name }}\${{ version }}"
 
 tests:
   - script:
@@ -41,20 +42,10 @@ requirements:
   build:
     - rust
     - rust-std-wasm32-unknown-unknown
-    - if: unix
-      then:
-        - __unix
-    - if: win
-      then:
-        - __win
+    - __${{ 'win' if win else 'unix' }}
   run:
     - typst >=0.12.0rc1
-    - if: unix
-      then:
-        - __unix
-    - if: win
-      then:
-        - __win
+    - __${{ 'win' if win else 'unix' }}
 
 about:
   repository: https://github.com/freundTech/typst-matryoshka
