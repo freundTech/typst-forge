@@ -1,0 +1,41 @@
+context:
+  name: "fontawesome"
+  version: "0.2.1"
+
+package:
+  name: "typst-${{ name }}"
+  version: ${{ version }}
+
+source:
+  url: https://github.com/duskmoon314/typst-fontawesome/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: f7768e8344521a6ffcdb31319fe07f7abb31ec2fdbad63fb987c98f234e78fcb
+
+build:
+  number: 0
+  noarch: generic
+  script:
+    content:
+      - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+      - cp -r typst.toml README.md lib.typ lib-impl.typ lib-gen.typ
+          "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+
+tests:
+  - script:
+      - typst compile test.typ
+    files:
+      recipe:
+        test.typ
+
+
+requirements:
+  build:
+    - __unix
+  run:
+    - typst >=0.12.0rc1
+    - font-otf-fontawesome >=6.5.2,<7
+
+about:
+  repository: https://github.com/duskmoon314/typst-fontawesome
+  license: MIT
+  license_file: LICENSE
+  summary: A Typst library for Font Awesome icons through the desktop fonts.
