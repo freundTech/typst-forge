@@ -11,7 +11,7 @@ source:
   sha256: f7768e8344521a6ffcdb31319fe07f7abb31ec2fdbad63fb987c98f234e78fcb
 
 build:
-  number: 0
+  number: 1
   noarch: generic
   script:
     content:
@@ -31,7 +31,7 @@ requirements:
   build:
     - __unix
   run:
-    - typst >=0.12.0rc1
+    - typst >=0.12.0
     - font-otf-fontawesome >=6.5.2,<7
 
 about:

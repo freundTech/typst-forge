@@ -13,12 +13,12 @@ source:
     - 0001-Change-imports-from-preview-to-typst-forge.patch
 
 build:
-  number: 2
+  number: 4
   noarch: generic
   script:
     content:
       - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
-      - cp -r typst.toml README.md lib.typ template/
+      - cp -r typst.toml README.md lib.typ template
           "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
 
 tests:
@@ -31,7 +31,7 @@ requirements:
   build:
     - __unix
   run:
-    - typst >=0.12.0rc1
+    - typst >=0.12.0
     - typst-fontawesome =0.2.1
 
 about:
