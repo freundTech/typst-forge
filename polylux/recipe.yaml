@@ -1,0 +1,44 @@
+context:
+  name: polylux
+  version: "0.3.1"
+
+package:
+  name: typst-${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/andreasKroepelin/polylux/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: ad146e04657b3514b35873b45f4a7c33d582fe795e634f8aa4ac14b2074e0f3d
+
+build:
+  number: 2
+  noarch: generic
+  script:
+    content:
+      - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+      - cp -r typst.toml README.md polylux.typ logic.typ utils themes
+          "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+
+tests:
+  - script:
+      - typst compile test.typ
+    files:
+      recipe:
+        test.typ
+
+requirements:
+  build:
+    - __unix
+  run:
+    - typst >=0.12.0
+
+about:
+  homepage: https://polylux.dev/book
+  repository: https://github.com/andreasKroepelin/polylux
+  license: MIT
+  license_file: LICENSE
+  summary: A package for creating slides in Typst
+  description: >-
+    Polylux is a package for the typesetting system Typst to create presentation slides,
+    just like you would use the beamer package in LaTeX.
+  documentation: https://polylux.dev/book
