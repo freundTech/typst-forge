@@ -31,7 +31,7 @@ requirements:
   build:
     - __unix
   run:
-    - typst >=0.12.0rc1
+    - typst >=0.12.0
     - typst-fontawesome =0.2.1
 
 about:
