@@ -26,7 +26,7 @@ jobs:
       shell: bash
       run: |
         rattler-build build --recipe-dir . --skip-existing=all \
-          -c conda-forge/label/typst_rc -c conda-forge -c https://prefix.dev/typst-forge
+          -c conda-forge -c https://prefix.dev/typst-forge
     - name: Upload all packages
       shell: bash
       if: github.event_name == 'push'  # do not upload on PR
