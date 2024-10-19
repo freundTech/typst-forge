@@ -67,6 +67,6 @@ To submit a package to typst-forge you just need to fork this repository and cre
 Create a new directory for your package and copy and adjust the `recipe.yaml` file from another package.
 You can look at [matroshka](matryoshka/recipe.yaml) for how to create a package with a WASM plugin, at [moderner-cv](moderner-cv/recipe.yaml) for how to create a template and at [fontawesome](fontawesome/recipe.yaml) for how to create a package with a font (The font itself is packaged on [conda-forge](https://github.com/conda-forge/font-otf-fontawesome-feedstock/), while the typst package only has a dependency on it.
 
-You can test your recipes locally by running `pixi run build <package-name>>`.
+You can test your recipes locally by running `pixi run build <package-name>`.
 
 The full documentation for the recipe format can be found in the [rattler-build documentation](https://prefix-dev.github.io/rattler-build/latest/reference/recipe_file/).
