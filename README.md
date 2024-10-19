@@ -17,7 +17,7 @@ You can see a list of packages on typst forge at https://prefix.dev/channels/typ
 | Works using the web app                                  | ❌          | ✅                                           |
 | Supports packages with large files                       | ✅          | ❌                                           |
 | Supports packages with fonts                             | ✅          | ❌                                           |
-| Also disributes Typst itself                             | ✅          | ❌                                           |
+| Also distributes Typst itself                             | ✅          | ❌                                           |
 | Also distributes other tools like linters and formatters | ✅          | ❌                                           |
 | Integrates with self-hosted repositories                 | ✅          | ❌                                           |
 | Supports multiple versions of one package in a project   | ❌          | ✅                                           |
