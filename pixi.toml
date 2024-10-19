@@ -1,11 +1,11 @@
 [project]
 name = "typst-conda"
 authors = ["Adrian Freund <adrian@freund.io>"]
-channels = ["conda-forge/label/typst_rc", "conda-forge"]
+channels = ["conda-forge"]
 platforms = ["linux-64", "linux-aarch64", "win-64", "osx-64", "osx-arm64"]
 
 [feature.build.tasks]
-build = "rattler-build build -c conda-forge/label/typst_rc -c conda-forge -c https://prefix.dev/typst-forge --recipe "
+build = "rattler-build build -c conda-forge -c https://prefix.dev/typst-forge --recipe "
 
 [feature.build.dependencies]
 rattler-build = ">=0.24.0"

@@ -13,7 +13,7 @@ source:
     - 0001-Change-imports-from-preview-to-typst-forge.patch
 
 build:
-  number: 2
+  number: 3
   noarch: generic
   script:
     content:
@@ -31,7 +31,7 @@ requirements:
   build:
     - __unix
   run:
-    - typst >=0.12.0rc1
+    - typst >=0.12.0
     - typst-fontawesome =0.2.1
 
 about:
