@@ -13,7 +13,7 @@ source:
     - 0001-Change-imports-from-preview-to-typst-forge.patch
 
 build:
-  number: 4
+  number: 5
   noarch: generic
   script:
     content:
