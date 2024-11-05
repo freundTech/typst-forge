@@ -34,11 +34,29 @@ jobs:
       with:
         path: |
           output/**/*.conda
+
+    - name: Get JWT
+      id: get_token
+      if: github.event_name == 'push'  # do not upload on PR
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const token = await core.getIDToken('prefix.dev')
+          core.setOutput('token', token)
+    - name: Mint the API Key on prefix.dev
+      if: github.event_name == 'push'  # do not upload on PR
+      run: |
+        TOKEN="${{ steps.get_token.outputs.token }}"
+        RESPONSE="$(curl -s -X POST                 \
+             https://prefix.dev/api/oidc/mint_token \
+             -H 'Content-Type: application/json'    \
+             --data "{\"token\": \"$TOKEN\"}")"
+        # mask the response
+        echo "::add-mask::$RESPONSE"
+        echo "PREFIX_API_KEY=$RESPONSE" >> "$GITHUB_ENV"
     - name: Upload all packages
       shell: bash
       if: github.event_name == 'push'  # do not upload on PR
-      env:
-        PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
       run: |
         shopt -s nullglob
         EXIT_CODE=0

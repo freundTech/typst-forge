@@ -11,7 +11,7 @@ source:
   sha256: ad146e04657b3514b35873b45f4a7c33d582fe795e634f8aa4ac14b2074e0f3d
 
 build:
-  number: 2
+  number: 3
   noarch: generic
   script:
     content:
