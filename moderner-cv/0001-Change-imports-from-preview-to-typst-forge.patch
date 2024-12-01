@@ -23,8 +23,8 @@ index f84d693..df39fb2 100644
 --- a/template/example.typ
 +++ b/template/example.typ
 @@ -1,4 +1,4 @@
--#import "@preview/moderner-cv:0.1.0": *
-+#import "@typst-forge/moderner-cv:0.1.0": *
+-#import "@preview/moderner-cv:0.1.1": *
++#import "@typst-forge/moderner-cv:0.1.1": *
 
  #show: moderner-cv.with(
    name: "Jane Doe",
