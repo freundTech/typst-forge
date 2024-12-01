@@ -1,6 +1,6 @@
 context:
   name: "moderner-cv"
-  version: "0.1.0"
+  version: "0.1.1"
 
 package:
   name: "typst-${{ name }}"
@@ -8,12 +8,12 @@ package:
 
 source:
   url: https://github.com/pavelzw/moderner-cv/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: d845b0f8731aced8d2ad94599dbc1483746be113b249cbbffb0512d1efaf6974
+  sha256: 839e07b39c882e04d085d7e5d9754dc1187242cceef843608c45e9a48d7a9c2f
   patches:
     - 0001-Change-imports-from-preview-to-typst-forge.patch
 
 build:
-  number: 5
+  number: 0
   noarch: generic
   script:
     content:
@@ -23,7 +23,7 @@ build:
 
 tests:
   - script:
-      - typst init @typst-forge/moderner-cv:0.1.0 project
+      - typst init @typst-forge/moderner-cv:0.1.1 project
       - cd project
       - typst compile example.typ
 
