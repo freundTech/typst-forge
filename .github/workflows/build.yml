@@ -42,7 +42,7 @@ jobs:
     - name: Get JWT
       id: get_token
       if: github.event_name == 'push'  # do not upload on PR
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       with:
         script: |
           const token = await core.getIDToken('prefix.dev')
