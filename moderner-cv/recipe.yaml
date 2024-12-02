@@ -9,14 +9,14 @@ package:
 source:
   url: https://github.com/pavelzw/moderner-cv/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 839e07b39c882e04d085d7e5d9754dc1187242cceef843608c45e9a48d7a9c2f
-  patches:
-    - 0001-Change-imports-from-preview-to-typst-forge.patch
 
 build:
   number: 0
   noarch: generic
   script:
     content:
+      - sed -i 's|@preview/fontawesome|@typst-forge/fontawesome|g' lib.typ
+      - sed -i 's|@preview/moderner-cv|@typst-forge/moderner-cv|g' template/cv.typ
       - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
       - cp -r typst.toml README.md lib.typ template
           "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
@@ -25,14 +25,15 @@ tests:
   - script:
       - typst init @typst-forge/moderner-cv:0.1.1 project
       - cd project
-      - typst compile example.typ
+      - typst compile cv.typ
 
 requirements:
   build:
     - __unix
+    - sed
   run:
     - typst >=0.12.0
-    - typst-fontawesome =0.2.1
+    - typst-fontawesome 0.5.0
 
 about:
   repository: https://github.com/pavelzw/moderner-cv
