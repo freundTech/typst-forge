@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         fetch-depth: 2
-    - uses: prefix-dev/setup-pixi@ba3bb36eb2066252b2363392b7739741bb777659 # v0.8.1
+    - uses: prefix-dev/setup-pixi@92815284c57faa15cd896c4d5cfb2d59f32dc43d # v0.8.3
       with:
         pixi-version: v0.31.0
         environments: build
@@ -34,7 +34,7 @@ jobs:
         RATTLER_BUILD_ENABLE_GITHUB_INTEGRATION: true
         RATTLER_BUILD_COLOR: always
     - name: Upload packages as artifacts
-      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+      uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
       with:
         path: |
           output/**/*.conda
