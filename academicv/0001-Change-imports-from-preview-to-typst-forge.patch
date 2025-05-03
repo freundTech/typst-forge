@@ -1,0 +1,21 @@
+From dee15198c9ee17f18ac631cea2a3991e7dcf7ed0 Mon Sep 17 00:00:00 2001
+From: Adrian Freund <adrian@freund.io>
+Date: Sat, 12 Oct 2024 11:16:16 +0200
+Subject: [PATCH] Change imports from preview to typst-forge
+
+---
+ cv.typ              | 2 +-
+ template/example.typ | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/template/template.typ b/template/template.typ
+index f84d693..df39fb2 100644
+--- a/template/template.typ
++++ b/template/template.typ
+@@ -1,3 +1,3 @@
+-#import "@preview/academicv:1.1.1": *
++#import "@typst-forge/academicv:1.1.1": *
+
+ // Or for local development
+--
+2.46.2

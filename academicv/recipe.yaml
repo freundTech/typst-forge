@@ -1,6 +1,6 @@
 context:
   name: "academicv"
-  version: "1.1.0"
+  version: "1.1.1"
 
 package:
   name: "typst-${{ name }}"
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/roaldarbol/academicv/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: d845b0f8731aced8d2ad94599dbc1483746be113b249cbbffb0512d1efaf6974
+  sha256: 9c1f4baf132a6fc6b8a38a0b618360c5f0dada4a8a9545f94131a1be4ad1a242
   patches:
     - 0001-Change-imports-from-preview-to-typst-forge.patch
 
@@ -23,7 +23,7 @@ build:
 
 tests:
   - script:
-      - typst init @typst-forge/academicv:1.1.0 project
+      - typst init @typst-forge/academicv:1.1.1 project
       - cd project
       - typst compile template.typ
 
