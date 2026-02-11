@@ -6,6 +6,7 @@ platforms = ["linux-64", "linux-aarch64", "win-64", "osx-64", "osx-arm64"]
 
 [feature.build.tasks]
 build = "rattler-build build -c conda-forge -c https://prefix.dev/typst-forge --recipe "
+get-hash = { args = ["url"], cmd = "curl -sL \"{{ url }}\" -o - | shasum -a 256 | cut -d ' ' -f 1" }
 
 [feature.build.dependencies]
 rattler-build = ">=0.24.0"
