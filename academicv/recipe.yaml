@@ -1,0 +1,42 @@
+context:
+  name: "academicv"
+  version: "1.1.1"
+
+package:
+  name: "typst-${{ name }}"
+  version: ${{ version }}
+
+source:
+  url: https://github.com/roaldarbol/academicv/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 9c1f4baf132a6fc6b8a38a0b618360c5f0dada4a8a9545f94131a1be4ad1a242
+  patches:
+    - 0001-Change-imports-from-preview-to-typst-forge.patch
+
+build:
+  number: 0
+  noarch: generic
+  script:
+    content:
+      - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+      - cp -r typst.toml README.md cv.typ utils.typ template layouts
+          "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+
+tests:
+  - script:
+      - typst init @typst-forge/academicv:1.1.1 project
+      - cd project
+      - typst compile template.typ
+
+requirements:
+  build:
+    - __unix
+  run:
+    - typst >=0.13.0
+
+about:
+  repository: https://github.com/roaldarbol/academicv
+  license: MIT
+  license_file: LICENSE
+  summary: A clean academic curriculum vitae (CV) template using Typst and YAML
+  description: |
+    A clean academic curriculum vitae (CV) template using Typst and YAML
