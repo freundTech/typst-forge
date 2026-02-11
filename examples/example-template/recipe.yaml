@@ -1,0 +1,86 @@
+# This example shows how to define a recipe using the new YAML based recipe format introduced by 
+# CEP 13.
+
+# For more information about this format see: https://prefix-dev.github.io/rattler-build/latest/reference/recipe_file/
+
+# The main differences with the old format is that no preprocessing is required for the file to be valid YAML.
+# This means:
+# - No "selectors", use YAML if-then-else expressions instead (https://prefix-dev.github.io/rattler-build/latest/selectors/)
+# - Jinja expressions are formatted with a leading `$` to make them valid YAML
+
+# Note: there are many handy hints in comments in this example -- remove them when you've finalized your recipe
+
+# Define variables in this section that you can use in other parts.
+context:
+  name: "moderner-cv" 
+  version: "0.1.0"
+
+package:
+  name: "typst-${{ name }}"
+  version: ${{ version }}
+
+source:
+  url: https://github.com/pavelzw/${{ name }}/releases/download/${{ version }}/${{ name }}-${{ version }}.tar.gz
+  # Modify as needed; use releases if available and otherwise fall back to archive:
+  # url: https://github.com/pavelzw/moderner-cv/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: d845b0f8731aced8d2ad94599dbc1483746be113b249cbbffb0512d1efaf6974
+  # sha256 is the preferred checksum -- you can get it for a file with:
+  #  `openssl sha256 <file name>`,
+  # or, in one go without keeping the file with:
+  # `curl -L <url> | sha256
+  # You may need the packages or openssl and/or curl, available on conda-forge:
+  #  `conda install openssl curl -c conda-forge``
+
+build:
+  number: 0
+  noarch: generic
+  script:
+    content:
+      # If you distribute a template file, it is preferred to change the `@preview` to `@typst-forge`.
+      # This can either be done with a patch or by simply uncommenting the following line and 
+      # change `template/cv.typ` to the relevant file:
+      # - sed -i 's|@preview/${{ name }}|@typst-forge/${{ name }}|g' template/cv.typ
+      - mkdir -p "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+      # Edit the content to be copied by including the relevant files and folders in the `cp` line:
+      - cp -r typst.toml README.md lib.typ template
+          "$PREFIX/share/typst/packages/typst-forge/${{ name }}/${{ version }}"
+
+tests:
+  - script:
+      - typst init @typst-forge/${{ name }}:${{ version }} project
+      - cd project
+      - typst compile example.typ
+      # Change `example.typ` to match a `.typ` file in your `template` folder
+
+requirements:
+  build:
+    - __unix
+  run:
+    - typst >=0.12.0
+    # Add the relevant dependencies as they are named on either [conda-forge](https://prefix.dev/channels/conda-forge) or [typst-forge](https://prefix.dev/channels/typst-forge). 
+    # This package for example needs the typst-fontawesome package.
+    - typst-fontawesome =0.2.1
+
+about:
+  homepage:
+  summary: moderncv in typst
+  description: |
+    This is a typst adaptation of LaTeX's moderncv, a modern curriculum vitae class.
+  # Remember to specify the license variants for BSD, Apache, GPL, and LGPL.
+  # Use the SPDX identifier, e.g: GPL-2.0-only instead of GNU General Public License version 2.0
+  # See https://spdx.org/licenses/
+  license: MIT
+  # It is required to include a license file in the package,
+  # (even if the license doesn't require it) using the license_file entry.
+  # Please also note that some projects have multiple license files which all need to be added using a valid yaml list.
+  # See https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#license-file
+  license_file: LICENSE
+  # The documentation and repository URLs are optional.
+  documentation: https://github.com/pavelzw/moderner-cv
+  repository: https://github.com/pavelzw/moderner-cv
+
+extra:
+  recipe-maintainers:
+    # GitHub IDs for maintainers of the recipe.
+    # Always check with the people listed below if they are OK becoming maintainers of the recipe. (There will be spam!)
+    - pavelzw
