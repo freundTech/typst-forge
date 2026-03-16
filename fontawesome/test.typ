@@ -1,1 +1,1 @@
-#import "@typst-forge/fontawesome:0.2.1": fa-icon
+#import "@typst-forge/fontawesome:0.5.0": fa-icon
