@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         fetch-depth: 2
-    - uses: prefix-dev/setup-pixi@a0af7a228712d6121d37aba47adf55c1332c9c2e # v0.9.4
+    - uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0 # v0.9.5
       with:
         pixi-version: v0.63.2
         environments: build
@@ -34,7 +34,7 @@ jobs:
         RATTLER_BUILD_ENABLE_GITHUB_INTEGRATION: true
         RATTLER_BUILD_COLOR: always
     - name: Upload packages as artifacts
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         path: |
           output/**/*.conda
@@ -42,7 +42,7 @@ jobs:
     - name: Get JWT
       id: get_token
       if: github.event_name == 'push'  # do not upload on PR
-      uses: actions/github-script@v8
+      uses: actions/github-script@v9
       with:
         script: |
           const token = await core.getIDToken('prefix.dev')
